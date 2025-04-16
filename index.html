@@ -5,29 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Date Widget</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1e1e2f;
-      color: #ffffff;
-      text-align: center;
-      padding: 30px;
+    html, body {
       margin: 0;
+      padding: 0;
+      background: transparent;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
     }
+
     .widget {
-      background: #2e2e40;
+      background: #1e1e2f;
+      color: #fff;
       border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      max-width: 400px;
-      margin: auto;
+      width: 350px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      box-sizing: border-box;
     }
-    h1 {
-      margin: 0;
-      font-size: 2em;
+
+    .widget h1 {
+      font-size: 1.5rem;
+      margin: 0 0 10px;
     }
-    p {
-      margin: 8px 0;
-      font-size: 1.2em;
+
+    .widget p {
+      font-size: 1rem;
+      margin: 6px 0;
     }
   </style>
 </head>
@@ -45,35 +48,28 @@
       const now = new Date();
       const year = now.getFullYear();
 
-      // Format date
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("currentDate").innerText = now.toLocaleDateString(undefined, options);
 
-      // Day of year
       const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start;
       const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      document.getElementById("dayOfYear").innerText = `📆 Day of the Year: ${dayOfYear}`;
+      const dayOfYear = Math.floor((now - start) / oneDay);
+      document.getElementById("dayOfYear").innerText = `📆 Day of Year: ${dayOfYear}`;
 
-      // Week number
       const firstJan = new Date(now.getFullYear(), 0, 1);
       const weekNumber = Math.ceil(((now - firstJan) / oneDay + firstJan.getDay() + 1) / 7);
       document.getElementById("weekNumber").innerText = `🗓️ Week Number: ${weekNumber}`;
 
-      // Days left in month
       const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
       const daysLeftInMonth = lastDayOfMonth.getDate() - now.getDate();
       document.getElementById("daysLeftMonth").innerText = `📉 Days Left in Month: ${daysLeftInMonth}`;
 
-      // Days left in year
       const end = new Date(now.getFullYear(), 11, 31);
       const daysLeftInYear = Math.ceil((end - now) / oneDay);
       document.getElementById("daysLeftYear").innerText = `📉 Days Left in Year: ${daysLeftInYear}`;
     }
 
     updateWidget();
-    setInterval(updateWidget, 1000 * 60 * 60); // update every hour
   </script>
 </body>
 </html>
